@@ -1,0 +1,18 @@
+constraintLength = 3;
+tbl = 4;
+trellis = poly2trellis(constraintLength, [6 7]);
+inputData = [1 1 1 0];
+encodedData = convenc(inputData, trellis);
+SNR = 5;
+noisyData = awgn(encodedData, SNR, 'measured');
+noisyData = (noisyData > 0.5);
+decodedData = vitdec(encodedData, trellis, tbl, 'trunc', 'hard');
+disp('Original Data:');
+disp(inputData);
+disp('Encoded Data:');
+disp(encodedData);
+disp('Noisy Data:');
+disp(noisyData);
+disp('Decoded Data:');
+disp(decodedData);
+disp(['Decoding Successful: ' num2str(isequal(inputData, decodedData))]);
